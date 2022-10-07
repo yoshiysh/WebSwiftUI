@@ -15,10 +15,23 @@ public final class WebSwiftUIViewModel: ObservableObject {
     @Published public private(set) var canGoBack = false
     @Published public private(set) var canGoForward = false
     @Published public private(set) var estimatedProgress: Double = 0
+    @Published private(set) var updateState: WebViewUpdateState?
 
     private var cancellables = Set<AnyCancellable>()
     
     public init() {}
+    
+    public func onTapGoback() {
+        updateState = .goBack
+    }
+    
+    public func onTapGoForward() {
+        updateState = .goForward
+    }
+    
+    public func onTapReload() {
+        updateState = .reload
+    }
     
     func subscribe(wkWebView: WKWebView) {
         wkWebView.publisher(for: \.isLoading)

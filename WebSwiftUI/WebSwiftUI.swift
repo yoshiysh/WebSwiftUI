@@ -8,19 +8,23 @@
 import SwiftUI
 
 public struct WebSwiftUI: View {
-    @ObservedObject var viewModel: WebSwiftUIViewModel
-    private var url: URL
+    @ObservedObject private var webViewModel: WebViewModel
+    @ObservedObject private var viewModel: WebSwiftUIViewModel
     
     public var body: some View {
-        WebView(url: url, uiStateModel: viewModel)
+        WebView(viewModel: webViewModel)
+            .onChange(of: viewModel.updateState) { state in
+                webViewModel.updateState(for: state)
+            }
     }
     
     public init(
         url: URL,
         viewModel: WebSwiftUIViewModel? = nil
     ) {
-        self.url = url
+        webViewModel = .init(url: url)
         self.viewModel = viewModel ?? .init()
+        webViewModel.setUIState(self.viewModel)
     }
     
     public init(

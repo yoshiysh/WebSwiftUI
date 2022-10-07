@@ -5,9 +5,8 @@ import WebKit
 struct WebView {
     @ObservedObject private var viewModel: WebViewModel
 
-    init(url: URL, uiStateModel: WebSwiftUIViewModel) {
-        viewModel = .init(url: url)
-        viewModel.setUIState(uiStateModel)
+    init(viewModel: WebViewModel) {
+        self.viewModel = viewModel
     }
 }
 
