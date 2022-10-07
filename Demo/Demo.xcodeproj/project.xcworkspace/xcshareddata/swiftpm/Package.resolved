@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "webswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yoshiysh/WebSwiftUI",
+      "state" : {
+        "revision" : "024a5c9ff6610b53e297b4bbf475136b60af4d39",
+        "version" : "0.0.2"
+      }
+    }
+  ],
+  "version" : 2
+}
