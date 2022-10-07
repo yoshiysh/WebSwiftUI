@@ -11,10 +11,10 @@ import WebKit
 
 @MainActor
 public final class WebSwiftUIViewModel: ObservableObject {
-    @Published private(set) var isLoading = false
-    @Published private(set) var canGoBack = false
-    @Published private(set) var canGoForward = false
-    @Published private(set) var estimatedProgress: Double = 0
+    @Published public private(set) var isLoading = false
+    @Published public private(set) var canGoBack = false
+    @Published public private(set) var canGoForward = false
+    @Published public private(set) var estimatedProgress: Double = 0
 
     private var cancellables = Set<AnyCancellable>()
     
