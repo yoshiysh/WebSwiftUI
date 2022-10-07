@@ -1,8 +1,8 @@
 //
-//  WebViewStateModel.swift
-//  WebSwiftUI
+//  WebSwiftUIViewModel.swift
+//  
 //
-//  Created by yoshi on 2022/10/07.
+//  Created by yoshi on 2022/10/08.
 //
 
 import Combine
@@ -10,15 +10,16 @@ import Foundation
 import WebKit
 
 @MainActor
-final class WebViewStateModel: ObservableObject {
-
-    @Published var isLoading = false
-    @Published var canGoBack = false
-    @Published var canGoForward = false
-    @Published var estimatedProgress: Double = 0
+public final class WebSwiftUIViewModel: ObservableObject {
+    @Published private(set) var isLoading = false
+    @Published private(set) var canGoBack = false
+    @Published private(set) var canGoForward = false
+    @Published private(set) var estimatedProgress: Double = 0
 
     private var cancellables = Set<AnyCancellable>()
-
+    
+    public init() {}
+    
     func subscribe(wkWebView: WKWebView) {
         wkWebView.publisher(for: \.isLoading)
             .receive(on: DispatchQueue.main)

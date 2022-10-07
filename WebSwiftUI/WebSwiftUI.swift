@@ -8,21 +8,29 @@
 import SwiftUI
 
 public struct WebSwiftUI: View {
+    @ObservedObject var viewModel: WebSwiftUIViewModel
     private var url: URL
     
     public var body: some View {
-        WebView(url: url)
+        WebView(url: url, uiStateModel: viewModel)
     }
     
-    public init(url: URL) {
+    public init(
+        url: URL,
+        viewModel: WebSwiftUIViewModel? = nil
+    ) {
         self.url = url
+        self.viewModel = viewModel ?? .init()
     }
     
-    public init(url: String) throws {
+    public init(
+        url: String,
+        viewModel: WebSwiftUIViewModel? = nil
+    ) throws {
         guard let url = URL(string: url) else {
             throw URLError(.badURL)
         }
-        self.init(url: url)
+        self.init(url: url, viewModel: viewModel)
     }
 }
 

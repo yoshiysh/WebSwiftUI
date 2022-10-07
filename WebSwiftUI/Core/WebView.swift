@@ -4,18 +4,10 @@ import WebKit
 
 struct WebView {
     @ObservedObject private var viewModel: WebViewModel
-    @ObservedObject private var uiStateModel: WebViewStateModel = .init()
 
-    init(url: URL) {
+    init(url: URL, uiStateModel: WebSwiftUIViewModel) {
         viewModel = .init(url: url)
         viewModel.setUIState(uiStateModel)
-    }
-    
-    init(url: String) throws {
-        guard let url = URL(string: url) else {
-            throw URLError(.badURL)
-        }
-        self.init(url: url)
     }
 }
 

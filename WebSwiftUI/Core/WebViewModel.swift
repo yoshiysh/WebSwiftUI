@@ -14,7 +14,7 @@ final class WebViewModel: ObservableObject {
 
     @Published var willWebViewUpdate = false
 
-    private(set) var uiState: WebViewStateModel?
+    private(set) var uiState: WebSwiftUIViewModel?
     private(set) var updateState: WebViewUpdateState?
     private(set) var url: URL
 
@@ -22,7 +22,7 @@ final class WebViewModel: ObservableObject {
         self.url = url
     }
 
-    func setUIState(_ uiState: WebViewStateModel) {
+    func setUIState(_ uiState: WebSwiftUIViewModel) {
         self.uiState = uiState
     }
 
