@@ -8,7 +8,7 @@
 [![Platform Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fyoshiysh%2FWebSwiftUI%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/yoshiysh/WebSwiftUI)
 [![License](https://img.shields.io/github/license/yoshiysh/WebSwiftUI)](https://github.com/yoshiysh/WebSwiftUI/blob/main/LICENSE)
 
-Transform strings easily in Swift.
+Show WebView easily in SwiftUI.
 
 ## About
 
@@ -58,4 +58,4 @@ I would be happy if you contribute :)
 
 ## Stats
 
-[![Stats](https://repobeats.axiom.co/api/embed/3b9229c64d59197051a610e702ffb2cc822db648.svg "Repobeats analytics image")](https://github.com/yoshiysh/WebSwiftUI)
+[![Stats](https://repobeats.axiom.co/api/embed/06bed3501f82cc4dce96501c1e766680bad8e84e.svg "Repobeats analytics image")](https://github.com/yoshiysh/WebSwiftUI)
