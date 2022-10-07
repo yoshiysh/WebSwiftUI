@@ -14,11 +14,11 @@ public struct WebSwiftUI: View {
         WebView(url: url)
     }
     
-    init(url: URL) {
+    public init(url: URL) {
         self.url = url
     }
     
-    init(url: String) throws {
+    public init(url: String) throws {
         guard let url = URL(string: url) else {
             throw URLError(.badURL)
         }

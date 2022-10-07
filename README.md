@@ -1,6 +1,6 @@
 # WebSwiftUI
 
-[![CI](https://github.com/yoshiysh/WebSwiftUI/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/yoshiysh/WebSwiftUI/actions/workflows/main.yml)
+[![CI](https://github.com/yoshiysh/WebSwiftUI/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/yoshiysh/WebSwiftUI/actions/workflows/build-and-test.yml)
 [![Release](https://img.shields.io/github/v/release/yoshiysh/WebSwiftUI)](https://github.com/yoshiysh/WebSwiftUI/releases/latest)
 [![CocoaPods Version](https://img.shields.io/cocoapods/v/WebSwiftUI.svg)](https://cocoapods.org/pods/WebSwiftUI)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg)](https://github.com/yoshiysh/WebSwiftUI)
