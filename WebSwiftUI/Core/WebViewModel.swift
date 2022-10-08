@@ -9,40 +9,39 @@ import Combine
 import Foundation
 import WebKit
 
-@MainActor
-final class WebViewModel: ObservableObject {
+final class WebViewModel {
+    public static let shared: WebViewModel = .init()
+    public var url: URL { _url! }
 
-    @Published var willWebViewUpdate = false
-
-    private(set) var uiState: WebSwiftUIViewModel?
+    private(set) var updater: WebViewUpdater?
+    private(set) var uiViewModel: WebSwiftUIViewModel?
     private(set) var updateState: WebViewUpdateState?
-    private(set) var url: URL
-
-    init(url: URL) {
-        self.url = url
+    private var _url: URL?
+    
+    private init() {}
+    
+    func initialize(url: URL, uiViewModel: WebSwiftUIViewModel) {
+        WebViewModel.shared.uiViewModel = uiViewModel
+        WebViewModel.shared.updateState = nil
+        WebViewModel.shared.current(url: url)
     }
-
-    func setUIState(_ uiState: WebSwiftUIViewModel) {
-        self.uiState = uiState
-    }
-
+    
     func updateState(for updateState: WebViewUpdateState?) {
-        self.updateState = updateState
-        willWebViewUpdate = true
+        WebViewModel.shared.updateState = updateState
     }
 
     func resetWebViewState() {
-        updateState = nil
+        WebViewModel.shared.updateState = nil
     }
 
     func current(url: URL?) {
         guard let url = url else {
             return
         }
-        self.url = url
+        WebViewModel.shared._url = url
     }
 
-    func subscribe(wkWebView: WKWebView) {
-        uiState?.subscribe(wkWebView: wkWebView)
+    @MainActor func subscribe(wkWebView: WKWebView) {
+        WebViewModel.shared.uiViewModel?.subscribe(wkWebView: wkWebView)
     }
 }

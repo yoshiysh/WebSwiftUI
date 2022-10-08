@@ -1,6 +1,6 @@
 //
 //  WebSwiftUIViewModel.swift
-//  
+//  WebSwiftUI
 //
 //  Created by yoshi on 2022/10/08.
 //
@@ -22,15 +22,15 @@ public final class WebSwiftUIViewModel: ObservableObject {
     public init() {}
     
     public func onTapGoback() {
-        updateState = .goBack
+        updateState(state: .goBack)
     }
     
     public func onTapGoForward() {
-        updateState = .goForward
+        updateState(state: .goForward)
     }
     
     public func onTapReload() {
-        updateState = .reload
+        updateState(state: .reload)
     }
     
     func subscribe(wkWebView: WKWebView) {
@@ -61,5 +61,14 @@ public final class WebSwiftUIViewModel: ObservableObject {
                 self?.estimatedProgress = value
             }
             .store(in: &cancellables)
+    }
+    
+    private func updateState(state: WebViewUpdateState) {
+        self.updateState = state
+        
+        Task {
+            try? await Task.sleep(nanoseconds:100_000)
+            self.updateState = nil
+        }
     }
 }

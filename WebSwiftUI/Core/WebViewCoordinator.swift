@@ -10,12 +10,7 @@ import SwiftUI
 import WebKit
 
 class WebViewCoordinator: NSObject {
-
-    @ObservedObject private var viewModel: WebViewModel
-
-    init(viewModel: WebViewModel) {
-        self.viewModel = viewModel
-    }
+    private let viewModel: WebViewModel = .shared
 }
 
 // MARK: WKNavigationDelegate
