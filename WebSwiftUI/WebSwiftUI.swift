@@ -8,13 +8,18 @@
 import SwiftUI
 
 public struct WebSwiftUI: View {
-    @ObservedObject private var webViewModel: WebViewModel
+    @StateObject private var updater: WebViewUpdater = .init()
     @ObservedObject private var viewModel: WebSwiftUIViewModel
+    private var webViewModel: WebViewModel = .shared
     
     public var body: some View {
-        WebView(viewModel: webViewModel)
+        WebView(updater: updater)
             .onChange(of: viewModel.updateState) { state in
+                guard let state = state else {
+                    return
+                }
                 webViewModel.updateState(for: state)
+                updater.willUpdate()
             }
     }
     
@@ -22,9 +27,8 @@ public struct WebSwiftUI: View {
         url: URL,
         viewModel: WebSwiftUIViewModel? = nil
     ) {
-        webViewModel = .init(url: url)
         self.viewModel = viewModel ?? .init()
-        webViewModel.setUIState(self.viewModel)
+        webViewModel.initialize(url: url, uiViewModel: self.viewModel)
     }
     
     public init(

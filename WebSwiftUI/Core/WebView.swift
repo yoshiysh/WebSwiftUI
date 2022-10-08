@@ -1,13 +1,17 @@
+//
+//  WebView.swift
+//  WebSwiftUI
+//
+//  Created by yoshi on 2022/10/07.
+//
+
 import Foundation
 import SwiftUI
 import WebKit
 
 struct WebView {
-    @ObservedObject private var viewModel: WebViewModel
-
-    init(viewModel: WebViewModel) {
-        self.viewModel = viewModel
-    }
+    @ObservedObject var updater: WebViewUpdater
+    private let viewModel: WebViewModel = .shared
 }
 
 // MARK: UIViewRepresentable
@@ -16,7 +20,7 @@ extension WebView: UIViewRepresentable {
     typealias Coordinator = WebViewCoordinator
 
     func makeCoordinator() -> Coordinator {
-        WebViewCoordinator(viewModel: viewModel)
+        WebViewCoordinator()
     }
 
     func makeUIView(context: Context) -> WKWebView {
@@ -32,7 +36,7 @@ extension WebView: UIViewRepresentable {
     }
 
     func updateUIView(_ wkWebView: WKWebView, context: Context) {
-        guard viewModel.willWebViewUpdate else {
+        if !updater.willWebViewUpdate {
             return
         }
 
