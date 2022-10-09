@@ -9,8 +9,41 @@ import SwiftUI
 import WebSwiftUI
 
 struct ContentView: View {
+    @StateObject var viewModel: WebSwiftUIViewModel = .init()
+    
     var body: some View {
-        try? WebSwiftUI(url: "https://github.com/yoshiysh/WebSwiftUI")
+        ZStack(alignment: .bottom) {
+            try? WebSwiftUI(url: "https://github.com/yoshiysh/WebSwiftUI", viewModel: viewModel)
+
+            ProgressView(value: viewModel.estimatedProgress)
+                .opacity(viewModel.isLoading ? 1 : 0)
+                .transition(.opacity)
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Button {
+                    viewModel.onTapGoback()
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+                .disabled(!viewModel.canGoBack)
+
+                Button {
+                    viewModel.onTapGoForward()
+                } label: {
+                    Image(systemName: "chevron.right")
+                }
+                .disabled(!viewModel.canGoForward)
+
+                Spacer()
+
+                Button {
+                    viewModel.onTapReload()
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                }
+            }
+        }
     }
 }
 
