@@ -13,6 +13,10 @@ let package = Package(
     dependencies: [
     ],
     targets: [
-        .target(name: "WebSwiftUI", path: "WebSwiftUI")
+        .target(
+            name: "WebSwiftUI",
+            path: "WebSwiftUI",
+            exclude: ["Demo", "Docs", "Reports"]
+        )
     ]
 )

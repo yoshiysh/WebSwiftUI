@@ -5,7 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/yoshiysh/WebSwiftUI",
       "state" : {
-        "revision" : "66f1bdbe2078928a62443f53afde360fa74ab917"
+        "revision" : "e0744a12be3f7f12a0e1e9d7d6087e115936d7e6",
+        "version" : "0.0.6"
       }
     }
   ],

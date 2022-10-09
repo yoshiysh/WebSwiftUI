@@ -41,7 +41,7 @@ jobs:
       with:
         name: xcodebuild-logs
         path: |
-          Reports/*_Build.log
+          ./WebSwiftUI/Reports/*_Build.log
         if-no-files-found: ignore
         retention-days: 14
 
