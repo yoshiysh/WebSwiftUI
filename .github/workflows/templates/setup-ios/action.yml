@@ -1,0 +1,14 @@
+name: "Setup for iOS"
+description: "Prepared development configuration for iOS"
+
+runs:
+  using: "composite"
+  steps:
+  - name: Enable faster builds for Swift projects
+    run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
+    shell: bash
+
+  # ref: https://developer.apple.com/forums/thread/703233
+  - name: Install Command Line Tools for Xcode
+    run: sudo xcode-select -s /Library/Developer/CommandLineTools
+    shell: bash
