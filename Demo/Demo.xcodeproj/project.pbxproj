@@ -11,7 +11,7 @@
 		920172B728F09A6000A8562B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920172B628F09A6000A8562B /* ContentView.swift */; };
 		920172B928F09A6100A8562B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 920172B828F09A6100A8562B /* Assets.xcassets */; };
 		920172BD28F09A6100A8562B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 920172BC28F09A6100A8562B /* Preview Assets.xcassets */; };
-		922F0DA028F09B85009881BD /* WebSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 922F0D9F28F09B85009881BD /* WebSwiftUI */; };
+		922F2F5D28F0C2BB00F071C6 /* WebSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 922F2F5C28F0C2BB00F071C6 /* WebSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				922F0DA028F09B85009881BD /* WebSwiftUI in Frameworks */,
+				922F2F5D28F0C2BB00F071C6 /* WebSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +88,7 @@
 			);
 			name = Demo;
 			packageProductDependencies = (
-				922F0D9F28F09B85009881BD /* WebSwiftUI */,
+				922F2F5C28F0C2BB00F071C6 /* WebSwiftUI */,
 			);
 			productName = Demo;
 			productReference = 920172B128F09A6000A8562B /* Demo.app */;
@@ -119,7 +119,7 @@
 			);
 			mainGroup = 920172A828F09A6000A8562B;
 			packageReferences = (
-				922F0D9E28F09B85009881BD /* XCRemoteSwiftPackageReference "WebSwiftUI" */,
+				922F2F5B28F0C2BB00F071C6 /* XCRemoteSwiftPackageReference "WebSwiftUI" */,
 			);
 			productRefGroup = 920172B228F09A6000A8562B /* Products */;
 			projectDirPath = "";
@@ -366,20 +366,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		922F0D9E28F09B85009881BD /* XCRemoteSwiftPackageReference "WebSwiftUI" */ = {
+		922F2F5B28F0C2BB00F071C6 /* XCRemoteSwiftPackageReference "WebSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yoshiysh/WebSwiftUI";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.2;
+				minimumVersion = 0.0.7;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		922F0D9F28F09B85009881BD /* WebSwiftUI */ = {
+		922F2F5C28F0C2BB00F071C6 /* WebSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 922F0D9E28F09B85009881BD /* XCRemoteSwiftPackageReference "WebSwiftUI" */;
+			package = 922F2F5B28F0C2BB00F071C6 /* XCRemoteSwiftPackageReference "WebSwiftUI" */;
 			productName = WebSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
