@@ -7,6 +7,7 @@ on:
     paths-ignore:
       - README.md
       - LICENSE
+
   pull_request:
     branches:
       - main
@@ -18,24 +19,40 @@ permissions:
   contents: read
 
 jobs:
-  run: 
+  build:
     name: Build and test with Xcode ${{ matrix.xcode.version }} on ${{ matrix.xcode.os }}
     runs-on: ${{ matrix.xcode.os }}
+
     strategy:
       matrix:
         xcode: 
-          - { os: macos-12, version: "14.0" }
+          - { os: macos-12, version: "14.1" }
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Show Versions
-        run: |
-          xcodebuild -version
-          swift --version
-          swift package --version
-      - name: Build
-        run: swift build -v
-      - name: Test
-        run: swfit teset -v -c release
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup
+      uses: ./.github/workflows/templates/setup-ios
+    - name: Xcode build for ${{ matrix.environment }}
+      run: make swift-build
+    - name: Upload build log Artifact
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: xcodebuild-logs
+        path: |
+          Reports/*_Build.log
+        if-no-files-found: ignore
+        retention-days: 14
+
     env:
       DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode.version }}.app
+
+  info:
+    runs-on: macos-12
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Output Information
+      uses: ./.github/workflows/templates/output-info
