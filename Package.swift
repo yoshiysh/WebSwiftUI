@@ -16,7 +16,7 @@ let package = Package(
         .target(
             name: "WebSwiftUI",
             path: "WebSwiftUI",
-            exclude: ["Demo", "Docs", "Reports"]
+            exclude: ["Demo", "Docs", "Reports", "WebSiwftUI.swift"]
         )
     ]
 )
