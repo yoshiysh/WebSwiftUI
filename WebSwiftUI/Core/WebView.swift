@@ -9,9 +9,15 @@ import Foundation
 import SwiftUI
 import WebKit
 
+@MainActor
 struct WebView {
-    @ObservedObject var updater: WebViewUpdater
-    private let viewModel: WebViewModel = .shared
+    @ObservedObject private var updater: WebViewUpdater
+    private let viewModel: WebViewModel
+    
+    init(updater: WebViewUpdater, viewModel: WebViewModel) {
+        self.updater = updater
+        self.viewModel = viewModel
+    }
 }
 
 // MARK: UIViewRepresentable
@@ -20,15 +26,17 @@ extension WebView: UIViewRepresentable {
     typealias Coordinator = WebViewCoordinator
 
     func makeCoordinator() -> Coordinator {
-        WebViewCoordinator()
+        WebViewCoordinator(viewModel: viewModel)
     }
 
     func makeUIView(context: Context) -> WKWebView {
-        let wkWebView = WKWebView()
-        let request = URLRequest(url: viewModel.url)
+        let configuration = WKWebViewConfiguration()
+        let wkWebView = WKWebView(frame: .zero, configuration: configuration)
+        let request = URLRequest(url: viewModel.url!)
 
         wkWebView.navigationDelegate = context.coordinator
         wkWebView.uiDelegate = context.coordinator
+        wkWebView.allowsBackForwardNavigationGestures = true
         wkWebView.load(request)
         viewModel.subscribe(wkWebView: wkWebView)
 
@@ -46,7 +54,7 @@ extension WebView: UIViewRepresentable {
         case .goForward:
             _ = wkWebView.goForward()
         case .reload:
-            let request = URLRequest(url: viewModel.url)
+            let request = URLRequest(url: viewModel.url!)
             _ = wkWebView.load(request)
         case nil:
             break

@@ -15,11 +15,28 @@ public final class WebSwiftUIViewModel: ObservableObject {
     @Published public private(set) var canGoBack = false
     @Published public private(set) var canGoForward = false
     @Published public private(set) var estimatedProgress: Double = 0
-    @Published private(set) var updateState: WebViewUpdateState?
+    
+    private(set) var url: URL
 
     private var cancellables = Set<AnyCancellable>()
     
-    public init() {}
+    public init(url: URL) {
+        self.url = url
+    }
+    
+    public convenience init(url: String) throws {
+        guard let url = URL(string: url) else {
+            throw URLError(.badURL)
+        }
+        self.init(url: url)
+    }
+    
+    public func updateUrl(url: URL?) {
+        guard let url = url else {
+            return
+        }
+        self.url = url
+    }
     
     public func onTapGoback() {
         updateState(state: .goBack)
@@ -61,14 +78,16 @@ public final class WebSwiftUIViewModel: ObservableObject {
                 self?.estimatedProgress = value
             }
             .store(in: &cancellables)
+        
+        wkWebView.publisher(for: \.url, options: .new)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.updateUrl(url: value)
+            }
+            .store(in: &cancellables)
     }
     
     private func updateState(state: WebViewUpdateState) {
-        self.updateState = state
-        
-        Task {
-            try? await Task.sleep(nanoseconds:100_000)
-            self.updateState = nil
-        }
+        WebViewModel.shared.updateState(state: state)
     }
 }
