@@ -9,25 +9,16 @@ import Combine
 import Foundation
 import WebKit
 
-final class WebViewModel {
+@MainActor
+final class WebViewModel: ObservableObject {
     public static let shared: WebViewModel = .init()
-    public var url: URL { _url! }
+    public var url: URL? { uiViewModel?.url }
 
-    private(set) var updater: WebViewUpdater?
+    @Published var updateState: WebViewUpdateState?
     private(set) var uiViewModel: WebSwiftUIViewModel?
-    private(set) var updateState: WebViewUpdateState?
-    private var _url: URL?
     
-    private init() {}
-    
-    func initialize(url: URL, uiViewModel: WebSwiftUIViewModel) {
+    func initialize(uiViewModel: WebSwiftUIViewModel) {
         WebViewModel.shared.uiViewModel = uiViewModel
-        WebViewModel.shared.updateState = nil
-        WebViewModel.shared.current(url: url)
-    }
-    
-    func updateState(for updateState: WebViewUpdateState?) {
-        WebViewModel.shared.updateState = updateState
     }
 
     func resetWebViewState() {
@@ -35,13 +26,14 @@ final class WebViewModel {
     }
 
     func current(url: URL?) {
-        guard let url = url else {
-            return
-        }
-        WebViewModel.shared._url = url
+        WebViewModel.shared.uiViewModel?.updateUrl(url: url)
     }
 
-    @MainActor func subscribe(wkWebView: WKWebView) {
+    func subscribe(wkWebView: WKWebView) {
         WebViewModel.shared.uiViewModel?.subscribe(wkWebView: wkWebView)
+    }
+    
+    func updateState(state: WebViewUpdateState) {
+        WebViewModel.shared.updateState = state
     }
 }

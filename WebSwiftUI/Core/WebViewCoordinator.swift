@@ -9,35 +9,61 @@ import Foundation
 import SwiftUI
 import WebKit
 
+@MainActor
 class WebViewCoordinator: NSObject {
-    private let viewModel: WebViewModel = .shared
+    private let viewModel: WebViewModel
+    
+    init(viewModel: WebViewModel) {
+        self.viewModel = viewModel
+    }
 }
 
 // MARK: WKNavigationDelegate
 
 extension WebViewCoordinator: WKNavigationDelegate {
 
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
+    ) {
+        decisionHandler(.allow)
     }
-
+    
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
     }
-
+    
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationResponse: WKNavigationResponse,
+        decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void
+    ) {
+        decisionHandler(.allow)
+    }
+    
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+    }
+    
+    func webView(
+        _ webView: WKWebView,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+    ) {
+        completionHandler(.useCredential, nil)
+    }
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        viewModel.current(url: webView.url)
     }
-
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError: Error) {
     }
-
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError: Error) {
     }
-}
-
-// MARK: WKUIDelegate
-
-extension WebViewCoordinator: WKUIDelegate {
-
+    
+    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation:WKNavigation!) {
+    }
+    
     func webView(
         _ webView: WKWebView,
         createWebViewWith configuration: WKWebViewConfiguration,
@@ -49,25 +75,9 @@ extension WebViewCoordinator: WKUIDelegate {
         }
         return nil
     }
+}
 
-    func webView(
-        _ webView: WKWebView,
-        decidePolicyFor navigationAction: WKNavigationAction,
-        decisionHandler: (WKNavigationActionPolicy) -> Void
-    ) {
-        if let url = navigationAction.request.url?.absoluteString {
-            if url.hasPrefix("https://apps.apple.com/") {
-                guard let appStoreLink = URL(string: url) else {
-                    return
-                }
-                UIApplication.shared.open(appStoreLink, options: [:]) { _ in
-                }
-                decisionHandler(WKNavigationActionPolicy.cancel)
-            } else if url.hasPrefix("http") {
-                decisionHandler(WKNavigationActionPolicy.allow)
-            } else {
-                decisionHandler(WKNavigationActionPolicy.cancel)
-            }
-        }
-    }
+// MARK: WKUIDelegate
+
+extension WebViewCoordinator: WKUIDelegate {
 }

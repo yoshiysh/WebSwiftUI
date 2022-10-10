@@ -10,40 +10,28 @@ import SwiftUI
 public struct WebSwiftUI: View {
     @StateObject private var updater: WebViewUpdater = .init()
     @ObservedObject private var viewModel: WebSwiftUIViewModel
-    private var webViewModel: WebViewModel = .shared
+    @ObservedObject private var webViewModel: WebViewModel = .shared
     
     public var body: some View {
-        WebView(updater: updater)
-            .onChange(of: viewModel.updateState) { state in
-                guard let state = state else {
+        WebView(updater: updater, viewModel: webViewModel)
+            .onChange(of: webViewModel.updateState) { state in
+                guard state != nil else {
                     return
                 }
-                webViewModel.updateState(for: state)
                 updater.willUpdate()
             }
     }
     
-    public init(
-        url: URL,
-        viewModel: WebSwiftUIViewModel? = nil
-    ) {
-        self.viewModel = viewModel ?? .init()
-        webViewModel.initialize(url: url, uiViewModel: self.viewModel)
-    }
-    
-    public init(
-        url: String,
-        viewModel: WebSwiftUIViewModel? = nil
-    ) throws {
-        guard let url = URL(string: url) else {
-            throw URLError(.badURL)
-        }
-        self.init(url: url, viewModel: viewModel)
+    public init(viewModel: WebSwiftUIViewModel) {
+        self.viewModel = viewModel
+        webViewModel.initialize(uiViewModel: self.viewModel)
     }
 }
 
 struct WebSwiftUI_Previews: PreviewProvider {
     static var previews: some View {
-        try? WebSwiftUI(url: "https://github.com/yoshiysh/WebSwiftUI")
+        WebSwiftUI(
+            viewModel: WebSwiftUIViewModel.init(url: URL(string: "https://github.com/yoshiysh/WebSwiftUI")!)
+        )
     }
 }
