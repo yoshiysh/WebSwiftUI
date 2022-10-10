@@ -9,12 +9,12 @@ import SwiftUI
 import WebSwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel: WebSwiftUIViewModel = .init()
+    @StateObject var viewModel: WebSwiftUIViewModel = .init(url: URL(string: "https://github.com/yoshiysh/WebSwiftUI")!)
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            try? WebSwiftUI(url: "https://github.com/yoshiysh/WebSwiftUI", viewModel: viewModel)
-
+            WebSwiftUI(viewModel: viewModel)
+            
             ProgressView(value: viewModel.estimatedProgress)
                 .opacity(viewModel.isLoading ? 1 : 0)
                 .transition(.opacity)
