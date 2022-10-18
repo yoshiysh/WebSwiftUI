@@ -66,7 +66,6 @@ public final class WebSwiftUIViewModel: ObservableObject {
             .store(in: &cancellables)
 
         wkWebView.publisher(for: \.estimatedProgress, options: .prior)
-            .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.estimatedProgress = value
             }
