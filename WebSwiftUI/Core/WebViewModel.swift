@@ -53,7 +53,8 @@ final class WebViewModel: ObservableObject {
         return _showLockdownModeFirstUseMessage as? ((WKWebView, String) async -> WKDialogResult)
     }
     
-    func initialize(uiViewModel: WebSwiftUIViewModel) {
+    @MainActor func initialize(uiViewModel: WebSwiftUIViewModel) {
+        reset()
         WebViewModel.shared.uiViewModel = uiViewModel
     }
 
@@ -76,5 +77,38 @@ final class WebViewModel: ObservableObject {
     @available(iOS 16.0, *)
     func showLockdownModeFirstUseMessage(_ showLockdownModeFirstUseMessage: @escaping ((WKWebView, String) async -> WKDialogResult)) {
         _showLockdownModeFirstUseMessage = showLockdownModeFirstUseMessage
+    }
+    
+    @MainActor private func reset() {
+        updateState = nil
+        uiViewModel = nil
+        
+        decidePolicyFor = nil
+        decidePolicyForWithPreferences = nil
+        decidePolicyForWithResponse = nil
+        didStartProvisionalNavigation = nil
+        didReceiveServerRedirectForProvisionalNavigation = nil
+        didFailProvisionalNavigation = nil
+        didCommit = nil
+        didFinish = nil
+        didFail = nil
+        respondTo = nil
+        webViewWebContentProcessDidTerminate = nil
+        shouldAllowDeprecatedTLSFor = nil
+        navigationAction = nil
+        navigationResponse = nil
+        
+        createWebViewWith = nil
+        webViewDidClose = nil
+        runJavaScriptAlertPanelWithMessage = nil
+        runJavaScriptConfirmPanelWithMessage = nil
+        runJavaScriptTextInputPanelWithPrompt = nil
+        decideMediaCapturePermissionsFor = nil
+        requestDeviceOrientationAndMotionPermissionFor = nil
+        contextMenuConfigurationFor = nil
+        contextMenuWillPresentForElement = nil
+        contextMenuForElement = nil
+        contextMenuDidEndForElement = nil
+        _showLockdownModeFirstUseMessage = nil
     }
 }
