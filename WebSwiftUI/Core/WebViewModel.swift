@@ -9,7 +9,6 @@ import Combine
 import Foundation
 import WebKit
 
-@MainActor
 final class WebViewModel: ObservableObject {
     public static let shared: WebViewModel = .init()
     @MainActor public var url: URL? { uiViewModel?.url }
@@ -66,7 +65,7 @@ final class WebViewModel: ObservableObject {
         WebViewModel.shared.uiViewModel?.updateUrl(url: url)
     }
 
-    func subscribe(wkWebView: WKWebView) {
+    @MainActor func subscribe(wkWebView: WKWebView) {
         WebViewModel.shared.uiViewModel?.subscribe(wkWebView: wkWebView)
     }
     

@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 import WebKit
 
-@MainActor
 class WebViewCoordinator: NSObject {
     internal let viewModel: WebViewModel
     
