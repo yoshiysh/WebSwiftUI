@@ -80,7 +80,6 @@ final class WebViewModel: ObservableObject {
     }
     
     @MainActor private func reset() {
-        updateState = nil
         uiViewModel = nil
         
         decidePolicyFor = nil
