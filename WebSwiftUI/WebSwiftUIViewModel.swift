@@ -24,13 +24,6 @@ public final class WebSwiftUIViewModel: ObservableObject {
         self.url = url
     }
     
-    public convenience init(url: String) throws {
-        guard let url = URL(string: url) else {
-            throw URLError(.badURL)
-        }
-        self.init(url: url)
-    }
-    
     public func updateUrl(url: URL?) {
         guard let url = url else {
             return
@@ -73,14 +66,12 @@ public final class WebSwiftUIViewModel: ObservableObject {
             .store(in: &cancellables)
 
         wkWebView.publisher(for: \.estimatedProgress)
-            .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.estimatedProgress = value
             }
             .store(in: &cancellables)
         
         wkWebView.publisher(for: \.url, options: .new)
-            .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.updateUrl(url: value)
             }
