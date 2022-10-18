@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "WebSwiftUI",
-    platforms: [.iOS(.v14)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(
             name: "WebSwiftUI", targets: ["WebSwiftUI"]),

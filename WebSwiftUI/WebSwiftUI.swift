@@ -10,7 +10,7 @@ import SwiftUI
 public struct WebSwiftUI: View {
     @StateObject private var updater: WebViewUpdater = .init()
     @ObservedObject private var viewModel: WebSwiftUIViewModel
-    @ObservedObject private var webViewModel: WebViewModel = .shared
+    @ObservedObject internal var webViewModel: WebViewModel = .shared
     
     public var body: some View {
         WebView(updater: updater, viewModel: webViewModel)
